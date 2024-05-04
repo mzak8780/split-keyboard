@@ -1,0 +1,148 @@
+units:
+  # Proxy Spacing Variables
+  kx: cx
+  ky: cy
+  # Padding Variables
+  px: kx + 4
+  py: ky + 4
+
+points:
+  zones:
+    matrix:
+      anchor:
+        shift: [150, -150]
+      key:
+        padding: 1ky
+        spread: 1kx
+      columns:
+        outer:
+        pinky:
+        ring:
+          key.origin: [-12, -19]
+          key.stagger: 18
+        middle:
+          key.stagger: 5
+        index:
+          key.stagger: -6
+        inner:
+          key.stagger: -2
+      rows:
+        bottom:
+        home:
+        top:
+    thumbfan:
+      key:
+        padding: 1ky
+        spread: 1kx
+      anchor:
+        ref: matrix_inner_bottom
+        shift: [-24, -20]
+      columns:
+        near:
+        home:
+          key.spread: 22.25
+          key.splay: -12
+          key.origin: [-11, -9]
+        far:
+          key.spread: 21.25
+          key.splay: -15
+          key.origin: [-11, -9]
+      rows:
+        thumb:
+
+outlines:
+  raw:
+    - what: rectangle
+      where: true
+      bound: true
+      size: [px, py]
+  keys:
+    - what: rectangle
+      where: true
+      bound: false
+      size: [kx-0.5,ky-0.5]
+  board:
+    - what: polygon
+      operation: stack
+      points:
+        - ref: matrix_outer_top
+          shift: [-0.5px,0.5py]
+        - ref: matrix_ring_top
+          shift: [-.5kx -1,0.5py]
+        - ref: matrix_middle_top
+          shift: [-.5kx,0.5py]
+        - ref: matrix_middle_top
+          shift: [.5kx + 1,0.5py]
+        - ref: matrix_inner_top
+          shift: [36.5,0.5py]
+        - ref: thumbfan_far_thumb
+          shift: [0.5px,0.5py]
+        - ref: thumbfan_far_thumb
+          shift: [0.5px,-0.5py]
+        - ref: thumbfan_home_thumb
+          shift: [0.5px,-0.5py]
+        - ref: thumbfan_home_thumb
+          shift: [-0.5px,-0.5py]
+        - ref: thumbfan_near_thumb
+          shift: [.5px, -.5py]
+        - ref: thumbfan_near_thumb
+          shift: [-.5px, -.5py]
+        - ref: matrix_pinky_bottom
+          shift: [.5px,-.5py]
+        - ref: matrix_outer_bottom
+          shift: [-.5px,-.5py]
+      fillet: 4
+  combo:
+    - name: board
+    - operation: subtract
+      name: keys
+pcbs:
+  split-circuit:
+    outlines:
+      main:
+        outline: board
+    footprints:
+      choc_hotswap:
+        what: choc
+        where: true
+        params:
+          keycaps: true
+          reverse: true
+          hotswap: true
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+      diode:
+        what: diode
+        where: true
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust:
+          shift: [0, -5]
+      promicro:
+        what: promicro
+        params:
+          orientation: "down"
+        where:
+          ref.aggregate.parts: [matrix_inner_top, matrix_inner_top]
+          shift: [23,-10]
+          rotate: -90
+      reset:
+        what: button
+        params:
+          from: GND
+          to: RST
+        where:
+          ref.aggregate.parts: [matrix_inner_bottom, matrix_inner_bottom]
+          shift: [0, -10]
+          rotate: -90
+      pcm12:
+        what: pcm12
+        where:
+          ref: matrix_inner_bottom
+          shift: [-75, -22]
+          rotate: 0
+        params:
+          from: GND
+          to: RAW 
+          reverse: true 
