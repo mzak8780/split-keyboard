@@ -6,6 +6,9 @@ units:
   px: kx + 4
   py: ky + 4
 
+meta:
+  engine: 4.1.0
+
 points:
   zones:
     matrix:
@@ -98,6 +101,7 @@ outlines:
       name: keys
 pcbs:
   split-circuit:
+    template: kicad8
     outlines:
       main:
         outline: board
@@ -119,30 +123,19 @@ pcbs:
           to: "{{row_net}}"
         adjust:
           shift: [0, -5]
-      promicro:
-        what: promicro
+      nice-nano:
+        what: mcu_nice_nano
         params:
-          orientation: "down"
+          reversible: true
+          reverse_mount: true
         where:
           ref.aggregate.parts: [matrix_inner_top, matrix_inner_top]
           shift: [23,-10]
-          rotate: -90
-      reset:
-        what: button
+      power:
+        what: power_switch_smd_side
+        where:
+          ref: [matrix_inner_bottom]
+          shift: [23, -10]
         params:
           from: GND
-          to: RST
-        where:
-          ref.aggregate.parts: [matrix_inner_bottom, matrix_inner_bottom]
-          shift: [0, -10]
-          rotate: -90
-      pcm12:
-        what: pcm12
-        where:
-          ref: matrix_inner_bottom
-          shift: [-75, -22]
-          rotate: 0
-        params:
-          from: GND
-          to: RAW 
-          reverse: true 
+          to: RAW
