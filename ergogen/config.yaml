@@ -19,20 +19,33 @@ points:
         spread: 1kx
       columns:
         outer:
+          key.column_net: P9
         pinky:
+          key.column_net: P8
         ring:
-          key.origin: [-12, -19]
-          key.stagger: 18
+          key:
+            origin: [-12, -19]
+            stagger: 18
+            column_net: P7
         middle:
-          key.stagger: 5
+          key:
+            stagger: 5
+            column_net: P6
         index:
-          key.stagger: -6
+          key:
+            stagger: -6
+            column_net: P5
         inner:
-          key.stagger: -2
+          key:
+            stagger: -2
+            column_net: P4
       rows:
         bottom:
+          row_net: P14
         home:
+          row_net: P16
         top:
+          row_net: P10
     thumbfan:
       key:
         padding: 1ky
@@ -42,16 +55,22 @@ points:
         shift: [-24, -20]
       columns:
         near:
+          key.column_net: P6
         home:
-          key.spread: 22.25
-          key.splay: -12
-          key.origin: [-11, -9]
+          key:
+            spread: 22.25
+            splay: -12
+            origin: [-11, -9]
+            column_net: P5
         far:
-          key.spread: 21.25
-          key.splay: -15
-          key.origin: [-11, -9]
+          key:
+            spread: 21.25
+            splay: -15
+            origin: [-11, -9]
+            column_net: P4
       rows:
         thumb:
+          row_net: P15
 
 outlines:
   raw:
@@ -131,11 +150,72 @@ pcbs:
         where:
           ref.aggregate.parts: [matrix_inner_top, matrix_inner_top]
           shift: [23,-10]
-      power:
+      power_switch:
         what: power_switch_smd_side
         where:
           ref: [matrix_inner_bottom]
-          shift: [23, -10]
+          shift: [35, -10]
         params:
-          from: GND
+          from: BAT_P
           to: RAW
+          reversible: true
+      battery_connector:
+        what: battery_connector_jst_ph_2
+        params:
+          reversible: true
+        where:
+          ref: [matrix_inner_home]
+          shift: [31, -14]
+          rotate: -90
+      top_right_hole:
+        what: mounting_hole_plated
+        where:
+          ref: [matrix_inner_top]
+          shift: [-6, 12]
+      home_right_hole:
+        what: mounting_hole_plated
+        where:
+          ref: [matrix_inner_home]
+          shift: [14, -14]
+      bottom_right_hole:
+        what: mounting_hole_plated
+        where:
+          ref: [matrix_inner_bottom]
+          shift: [32, -22]
+      thumb_right_hole:
+        what: mounting_hole_plated
+        where:
+          ref: [thumbfan_far_thumb]
+          shift: [-13, 8]
+      thumb_far_right_hole:
+        what: mounting_hole_plated
+        where:
+          ref: [thumbfan_home_thumb]
+          shift: [-13, 8]
+      bottom_left_hole:
+        what: mounting_hole_plated
+        where:
+          ref: [matrix_ring_bottom]
+          shift: [-5, -12]
+      bottom_mid_hole:
+        what: mounting_hole_plated
+        where:
+          ref: [matrix_middle_bottom]
+          shift: [-5, -12]
+      top_mid_hole:
+        what: mounting_hole_plated
+        where:
+          ref: [matrix_ring_top]
+          shift: [6, 11.5]
+      top_left_hole:
+        what: mounting_hole_plated
+        where:
+          ref: [matrix_pinky_top]
+          shift: [6, 12]
+      top_far_left_hole:
+        what: mounting_hole_plated
+        where:
+          ref: [matrix_outer_top]
+          shift: [0, 12]  
+
+        

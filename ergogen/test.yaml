@@ -1,0 +1,304 @@
+points:
+  key:
+    bind: 5
+  zones:
+    matrix:
+      columns:
+        pinky:
+          key:
+            bind: [5, 30, 5, 5]
+            column_net: P8
+        ring.key:
+          stagger: 0.85U
+          column_net: P7
+        middle.key:
+          stagger: 0.35U
+          bind: [5, 5, 13.5, 5]
+          column_net: P6
+        index.key:
+          stagger: -0.55U
+          bind: [5, 5, 5, 10.75]
+          column_net: P5
+        inner.key:
+          stagger: -0.15U
+          bind: [5, 30, 12, 5]
+          column_net: P4
+      rows:
+        bottom:
+          padding: U
+          row_net: P14
+        home:
+          padding: U
+          row_net: P16
+        top:
+          padding: U
+          row_net: P10
+    thumb:
+      anchor:
+        ref: matrix_index_bottom
+        shift: [-0.5U, -1.125U]
+      columns:
+        tucky:
+          key:
+            name: thumb_tucky
+            bind: [8, 12, 5, 5]
+            column_net: P6
+        home:
+          key:
+            name: thumb_home
+            spread: U
+            splay: -15
+            origin: [-0.5U, -0.65U]
+            column_net: P5
+        reachy:
+          key:
+            spread: U
+            splay: -15
+            origin: [-0.5U, -0.65U]
+            name: thumb_reachy
+            bind: [14, 5, 5, 8]
+            column_net: P4
+      rows:
+        thumb:
+          row_net: P15
+
+outlines:
+  _pcb_raw_keys:
+    - what: rectangle
+      where: true
+      bound: true
+      asym: left
+      size: [13, 12]
+      corner: 1
+  _pcb_raw_mcu:
+    - what: rectangle
+      size: [32, 74.5]
+      where:
+        - ref: matrix_inner_home
+          shift: [24, -3]
+  _pcb_raw: [_pcb_raw_keys, _pcb_raw_mcu]
+  pcb_fillet:
+    - what: outline
+      name: _pcb_raw
+      fillet: 1.25
+  _oled_cover_plate_raw:
+    - what: polygon
+      points:
+        - ref: matrix_inner_top
+          shift: [11, 14.5]
+        - ref: matrix_inner_bottom
+          shift: [11, -10]
+        - ref: matrix_inner_bottom
+          shift: [32, -20.5]
+        - ref: matrix_inner_bottom
+          shift: [39.5, -20.5]
+        - ref: matrix_inner_top
+          shift: [39.5, 14.5]
+  _oled_cover_plate:
+    - what: outline
+      name: _oled_cover_plate_raw
+      fillet: 1.25
+  _plate_oled_cover_cutout:
+    - what: polygon
+      points:
+        - ref: matrix_inner_top
+          shift: [0, 18]
+        - ref: matrix_inner_top
+          shift: [0, 14]
+        - ref: matrix_inner_top
+          shift: [0, 11]
+        - ref: matrix_inner_top
+          shift: [9.5, 11]
+        - ref: matrix_inner_bottom
+          shift: [9.5, -10.5]
+        - ref: matrix_inner_bottom
+          shift: [34.5, -24]
+        - ref: matrix_inner_bottom
+          shift: [41, -35]
+        - ref: matrix_inner_top
+          shift: [41, 18]
+  _plate_with_oled_cutout: [_pcb_raw, -_plate_oled_cover_cutout]
+  _plate_fillet:
+    - what: outline
+      name: _plate_with_oled_cutout
+      fillet: 1.25
+  _switch_cutouts:
+    - what: rectangle
+      where: true
+      size: 14
+      bound: false
+  _screw_holes:
+    top_left:
+      what: circle
+      radius: 1.125
+      where:
+        ref: matrix_ring_home
+        shift: [-9.25, 9.5]
+    bottom_left:
+      what: circle
+      radius: 1.125
+      where:
+        ref: matrix_pinky_bottom
+        shift: [9.5, 3]
+    top_right:
+      what: circle
+      radius: 1.125
+      where:
+        ref: matrix_inner_top
+        shift: [-9.6, -6.75]
+    palm:
+      what: circle
+      radius: 1.125
+      where:
+        ref: matrix_index_bottom
+        shift: [1.5, -22]
+    thumb:
+      what: circle
+      radius: 1.125
+      where:
+        ref: thumb_reachy
+        shift: [-11.325, 0]
+  _oled_screw_holes:
+    bottom_left:
+      what: circle
+      radius: 1.125
+      where:
+        ref: matrix_inner_bottom
+        shift: [18, -6]
+    bottom_right:
+      what: circle
+      radius: 1.125
+      where:
+        ref: matrix_inner_bottom
+        shift: [32, -12.5]
+  _pcb_outline: [pcb_fillet]
+  _3d_case_base_raw:
+    - what: outline
+      name: _pcb_raw
+      expand: 4
+      fillet: 1.25
+  _3d_case_wall_inner:
+    - what: outline
+      name: _pcb_raw
+      expand: 1
+      fillet: 1.25
+  _screw_holes_counter_sunk:
+    $extends: outlines._screw_holes
+    top_left:
+      radius: 2
+    bottom_left:
+      radius: 2
+    top_right:
+      radius: 2
+    palm:
+      radius: 2
+    thumb:
+      radius: 2
+  _3d_case_holes_heat_set:
+    $extends: outlines._screw_holes
+    top_left:
+      radius: 1.55
+    bottom_left:
+      radius: 1.55
+    top_right:
+      radius: 1.55
+    palm:
+      radius: 1.55
+    thumb:
+      radius: 1.55
+  _3d_case_spacer_outer:
+    - what: circle
+      radius: 2.125
+      where:
+        ref: matrix_inner_bottom
+        shift: [-20, -20]
+  _3d_case_spacer_inner:
+    - what: circle
+      radius: 1.125
+      where:
+        ref: matrix_inner_bottom
+        shift: [-20, -20]
+  _3d_case_pcb_risers_outer:
+    $extends: outlines._screw_holes
+    top_left:
+      radius: 2.125
+    bottom_left:
+      radius: 2.125
+    top_right:
+      radius: 2.125
+    palm:
+      radius: 2.125
+    thumb:
+      radius: 2.125
+  3d_case_keycaps:
+    - what: rectangle
+      where: true
+      size: 18.3
+      bound: false
+  3d_case_port_promicro:
+    - what: rectangle
+      size: [18, 60]
+      where:
+        - ref: matrix_inner_home
+          shift: [1U, 16.5]
+  3d_case_port_trrs:
+    - what: rectangle
+      size: [14, 100]
+      where:
+        - ref: matrix_inner_home
+          shift: [34.75, 32.5]
+  3d_case_port_reset_switch:
+    - what: rectangle
+      size: [60, 15]
+      where:
+        - ref: matrix_inner_home
+          shift: [36.5, -33.75]
+  3d_case_switch_cutouts:
+    - what: rectangle
+      where: true
+      size: 14.3
+      bound: false
+  3d_case_switch_cutouts_wide:
+    - what: rectangle
+      where: true
+      size: [14.3, 15.8]
+      bound: false
+  oled_cover: [_oled_cover_plate, -_oled_screw_holes]
+  switch_plate: [_plate_fillet, -_plate_oled_cover_cutout, -_switch_cutouts, -_screw_holes]
+  bottom_plate: [pcb_fillet, -_screw_holes]
+  3d_case_base: [_3d_case_base_raw, -_3d_case_holes_heat_set]
+  3d_case_wall: [_3d_case_base_raw, -_3d_case_wall_inner]
+  3d_case_plate_upper: [_plate_fillet, -_plate_oled_cover_cutout, -3d_case_switch_cutouts, -_screw_holes_counter_sunk]
+  3d_case_plate_lower: [_plate_fillet, -_plate_oled_cover_cutout, -3d_case_switch_cutouts_wide, -_screw_holes]
+  3d_case_pcb_risers: [_3d_case_pcb_risers_outer, -_screw_holes]
+  3d_case_spacer: [_3d_case_spacer_outer, -_3d_case_spacer_inner]
+
+pcbs:
+  split:
+    outlines:
+      pcb:
+        outline: _pcb_outline
+    footprints:
+      mcu:
+        what: mcu_nice_nano
+        where:
+          - ref: matrix_inner_home
+            shift: [1U, 16.5]
+            rotate: -90
+      mx:
+        what: mx
+        where: true
+        params:
+          from: "{{row_net}}"
+          to: "{{name}}"
+        adjust:
+          rotate: 180
+      diode:
+        what: diode
+        params:
+          to: "{{column_net}}"
+          from: "{{name}}"
+        adjust:
+          shift: [-7.5, 2]
+          rotate: -90
+      
